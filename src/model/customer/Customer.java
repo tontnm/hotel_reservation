@@ -1,5 +1,6 @@
-package model;
+package model.customer;
 
+import java.util.ArrayList;
 import java.util.regex.Pattern;
 
 public class Customer {
@@ -9,6 +10,7 @@ public class Customer {
     private final String emailRegex = "^(.+)@(.+).com$";
     private final Pattern pattern = Pattern.compile(emailRegex);
 
+
     public Customer(String firstName, String lastName, String email) {
 
         if (!pattern.matcher(email).matches()) {
@@ -17,6 +19,31 @@ public class Customer {
 
         this.firstName = firstName;
         this.lastName = lastName;
+        this.email = email;
+    }
+
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
         this.email = email;
     }
 
