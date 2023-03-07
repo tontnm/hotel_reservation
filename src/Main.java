@@ -1,5 +1,4 @@
-import menu.MainMenu;
-import service.CustomerService;
+import ui.MainMenu;
 
 public class Main {
 

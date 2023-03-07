@@ -1,9 +1,9 @@
-package api;
+package resources;
 
-import model.customer.Customer;
-import model.room.IRoom;
-import service.CustomerService;
-import service.ReservationService;
+import models.customer.Customer;
+import models.room.IRoom;
+import services.CustomerService;
+import services.ReservationService;
 
 import java.util.Collection;
 import java.util.List;

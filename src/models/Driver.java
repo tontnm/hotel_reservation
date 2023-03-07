@@ -1,6 +1,6 @@
-package model;
+package models;
 
-import model.customer.Customer;
+import models.customer.Customer;
 
 public class Driver {
     public static void main(String[] args) {

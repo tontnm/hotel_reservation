@@ -1,4 +1,4 @@
-package model.room.enums;
+package models.room.enums;
 
 public enum RoomType {
     SINGLE("1"), DOUBLE("2");

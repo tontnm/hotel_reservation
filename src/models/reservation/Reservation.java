@@ -1,7 +1,7 @@
-package model.reservation;
+package models.reservation;
 
-import model.room.IRoom;
-import model.customer.Customer;
+import models.room.IRoom;
+import models.customer.Customer;
 
 import java.util.Date;
 

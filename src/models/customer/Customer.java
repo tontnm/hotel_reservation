@@ -1,6 +1,5 @@
-package model.customer;
+package models.customer;
 
-import java.util.ArrayList;
 import java.util.regex.Pattern;
 
 public class Customer {

@@ -1,6 +1,6 @@
-package model.room;
+package models.room;
 
-import model.room.enums.RoomType;
+import models.room.enums.RoomType;
 
 public class FreeRoom extends Room {
     public FreeRoom(String roomNumber, Double price, RoomType enumeration) {

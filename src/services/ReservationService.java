@@ -1,8 +1,8 @@
-package service;
+package services;
 
-import model.customer.Customer;
-import model.room.IRoom;
-import model.reservation.Reservation;
+import models.customer.Customer;
+import models.room.IRoom;
+import models.reservation.Reservation;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -82,7 +82,8 @@ public class ReservationService {
             }
         }
 
-        return rooms.values().stream().filter(room -> notAvailableRoomList.stream()
+        return rooms.values().stream()
+                .filter(room -> notAvailableRoomList.stream()
                         .noneMatch(notAvailableRoom -> notAvailableRoom.equals(room)))
                 .collect(Collectors.toList());
     }

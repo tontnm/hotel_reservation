@@ -1,6 +1,6 @@
-package model.room;
+package models.room;
 
-import model.room.enums.RoomType;
+import models.room.enums.RoomType;
 
 public class Room implements IRoom {
     private String roomNumber;

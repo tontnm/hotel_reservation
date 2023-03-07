@@ -1,8 +1,8 @@
-package menu;
+package ui;
 
-import api.HotelResource;
-import model.reservation.Reservation;
-import model.room.IRoom;
+import resources.HotelResource;
+import models.reservation.Reservation;
+import models.room.IRoom;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -50,7 +50,7 @@ public class MainMenu {
                 } else {
                     System.out.println("Error: Invalid action\n");
                 }
-            } while (line.charAt(0) != '5' || line.length() != 1);
+            } while (line.charAt(0) != '5');
         } catch (StringIndexOutOfBoundsException ex) {
             System.out.println("Empty input received. Exiting program...");
         }

@@ -1,11 +1,10 @@
-package menu;
+package ui;
 
-import api.AdminResource;
-import model.customer.Customer;
-import model.room.IRoom;
-import model.room.Room;
-import model.room.enums.RoomType;
-import org.w3c.dom.ls.LSOutput;
+import resources.AdminResource;
+import models.customer.Customer;
+import models.room.IRoom;
+import models.room.Room;
+import models.room.enums.RoomType;
 
 import java.util.Collection;
 import java.util.Collections;
