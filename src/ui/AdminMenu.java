@@ -90,7 +90,7 @@ public class AdminMenu {
 
     private static double enterRoomPrice(Scanner scanner) {
         try {
-            return Double.parseDouble(scanner.nextLine());
+            return scanner.nextDouble();
         } catch (NumberFormatException ex) {
             System.out.println("Invalid room price! Please, enter a valid double number:" +
                     "Decimal should be separated by point (.)");
@@ -154,7 +154,7 @@ public class AdminMenu {
     }
 
     private static void displayAllReservations() {
-        adminResource.displayAllReservations();
+//        adminResource.displayAllReservations();
     }
 
 }

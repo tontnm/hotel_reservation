@@ -16,13 +16,9 @@ public class HotelResource {
     private CustomerService customerService = CustomerService.getInstance();
     private ReservationService reservationService = ReservationService.getInstance();
 
-    private HotelResource() {
-    }
-
     public static HotelResource getInstance() {
         return reference;
     }
-
 
     public Customer getCustomer(String email) {
         return customerService.getCustomer(email);
@@ -36,29 +32,22 @@ public class HotelResource {
         return reservationService.getARoom(roomNumber);
     }
 
-    public Reservation bookARoom(String customerEmail, IRoom room, Date checkInDate, Date checkOutDate) {
-        return reservationService.reverseARoom(getCustomer(customerEmail), room, checkInDate, checkOutDate);
+    public Reservation bookARoom(String email, IRoom room, Date inputCheckInDate, Date inputCheckOutDate) {
+        return reservationService.reserveARoom(getCustomer(email), room, inputCheckInDate, inputCheckOutDate);
     }
 
-    public Collection<Reservation> getCustomerReservations(String customerEmail) {
-        Customer customer = getCustomer(customerEmail);
+    public Collection<Reservation> getCustomersReservations(String email) {
+
+        Customer customer = getCustomer(email);
 
         if (customer == null) {
             return Collections.emptyList();
         }
 
-        return reservationService.getCustomerReservation(getCustomer(customerEmail));
+        return reservationService.getCustomerReservation(getCustomer(email));
     }
 
     public Collection<IRoom> findARoom(Date checkIn, Date checkOut) {
         return reservationService.findRooms(checkIn, checkOut);
-    }
-
-    public Collection<IRoom> findAlternativeRooms(Date checkIn, Date checkOut) {
-        return reservationService.findAlternativeRoom(checkIn, checkOut);
-    }
-
-    public Date addDefaultPlusDays(Date date) {
-        return reservationService.addDefaultPlusDays(date);
     }
 }

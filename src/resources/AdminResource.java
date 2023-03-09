@@ -6,6 +6,7 @@ import services.CustomerService;
 import services.ReservationService;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 public class AdminResource {
@@ -14,9 +15,6 @@ public class AdminResource {
 
     private CustomerService customerService = CustomerService.getInstance();
     private ReservationService reservationService = ReservationService.getInstance();
-
-    private AdminResource() {
-    }
 
     public static AdminResource getInstance() {
         return reference;
@@ -27,7 +25,9 @@ public class AdminResource {
     }
 
     public void addRoom(List<IRoom> rooms) {
-        rooms.forEach(reservationService::addRoom);
+        for (IRoom room : rooms) {
+            reservationService.addRoom(room);
+        }
     }
 
     public Collection<IRoom> getAllRooms() {
