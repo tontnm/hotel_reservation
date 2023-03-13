@@ -54,18 +54,46 @@ public class ReservationService {
         return rooms.values();
     }
 
-    public Collection<IRoom> findRooms(Date inputCheckInDate, Date inputCheckOutDate) {
+    public Collection<IRoom> findRooms(Date checkInDate, Date checkOutDate) {
         Collection<Reservation> allReservations = getAllReservations();
-
-        Collection<IRoom> availableRooms = new LinkedList<>();
+        Collection<IRoom> availableRooms = new LinkedList<>(rooms.values());
 
         for (Reservation reservation : allReservations) {
-            if (!reservation.getCheckInDate().before(inputCheckOutDate) && !reservation.getCheckOutDate().after(inputCheckInDate)) {
-                availableRooms.add(reservation.getRoom());
+            if (reservationOverlaps(reservation, checkInDate, checkOutDate)) {
+                availableRooms.remove(reservation.getRoom());
             }
         }
 
         return availableRooms;
+    }
+
+//    public Collection<IRoom> findRooms(Date inputCheckInDate, Date inputCheckOutDate) {
+//        Collection<Reservation> allReservations = getAllReservations();
+//
+//        Collection<IRoom> availableRooms = new LinkedList<>();
+//
+//        for (Reservation reservation : allReservations) {
+//            if (reservationOverlaps(reservation , inputCheckInDate, inputCheckOutDate)) {
+//                availableRooms.add(reservation.getRoom());
+//            }
+//        }
+//
+//        return availableRooms;
+//    }
+
+    private boolean reservationOverlaps(Reservation reservation, Date checkInDate, Date checkOutDate) {
+        Date reservationCheckInDate = reservation.getCheckInDate();
+        Date reservationCheckOutDate = reservation.getCheckOutDate();
+
+        if (checkOutDate.compareTo(reservationCheckInDate) <= 0) {
+            return false;
+        }
+
+        if (checkInDate.compareTo(reservationCheckOutDate) >= 0) {
+            return false;
+        }
+
+        return true;
     }
 
     public Collection<Reservation> getCustomerReservation(Customer customer) {
@@ -75,7 +103,7 @@ public class ReservationService {
     public void printAllReservation() {
         Collection<Reservation> reservations = getAllReservations();
 
-        if (reservations == null) {
+        if (reservations.isEmpty()) {
             System.out.println("No reservation yet.");
         } else {
             for (Reservation reservation : reservations) {

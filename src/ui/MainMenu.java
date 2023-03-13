@@ -1,5 +1,6 @@
 package ui;
 
+import models.customer.Customer;
 import resources.HotelResource;
 import models.reservation.Reservation;
 import models.room.IRoom;
@@ -7,6 +8,7 @@ import models.room.IRoom;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Collection;
+import java.util.Currency;
 import java.util.Date;
 import java.util.Scanner;
 
@@ -22,64 +24,34 @@ public class MainMenu {
 
         printMainMenu();
 
-//        try {
-//            do {
-//                line = scanner.nextLine();
-//
-//                if (line.length() == 1) {
-//                    switch (line.charAt(0)) {
-//                        case '1':
-//                            findAndReserveRoom();
-//                            break;
-//                        case '2':
-//                            seeMyReservation();
-//                            break;
-//                        case '3':
-//                            createAccount();
-//                            break;
-//                        case '4':
-//                            AdminMenu.adminMenu();
-//                            break;
-//                        case '5':
-//                            System.out.println("Exit");
-//                            break;
-//                        default:
-//                            System.out.println("Unknown action\n");
-//                            break;
-//                    }
-//                } else {
-//                    System.out.println("Error: Invalid action\n");
-//                }
-//            } while (line.charAt(0) != '5');
-//        } catch (StringIndexOutOfBoundsException ex) {
-//            System.out.println("Empty input received. Exiting program...");
-//        }
+        try {
+            do {
+                line = scanner.nextLine();
 
-        do {
-            line = scanner.nextLine();
-
-            switch (line.charAt(0)) {
-                case '1':
-                    findAndReserveRoom();
-                    break;
-                case '2':
-                    seeMyReservations();
-                    break;
-                case '3':
-                    createAccount();
-                    break;
-                case '4':
-                    System.out.println("AdminMenu");
-                    break;
-                case '5':
-                    System.out.println("Exit");
-                    break;
-                default:
-                    System.out.println("Unknown action");
-                    break;
-            }
-        } while (line.charAt(0) != '5');
-
+                switch (line.charAt(0)) {
+                    case '1':
+                        findAndReserveRoom();
+                        break;
+                    case '2':
+                        seeMyReservations();
+                        break;
+                    case '3':
+                        createAccount();
+                        break;
+                    case '4':
+                        AdminMenu.adminMenu();
+                        break;
+                    case '5':
+                        System.out.println("Exit");
+                        break;
+                    default:
+                        System.out.println("Unknown action");
+                        break;
+                }
+            } while (line.charAt(0) != '5');
+        } catch (IndexOutOfBoundsException ex) {
+            System.out.println("Exit");
+        }
     }
 
     public static void printMainMenu() {
@@ -106,11 +78,64 @@ public class MainMenu {
         if (inputCheckOutDate != null && inputCheckInDate != null) {
             Collection<IRoom> availableRooms = hotelResource.findARoom(inputCheckInDate, inputCheckOutDate);
 
+
+
             if (availableRooms.isEmpty()) {
-
+                reserveARoom(scanner, availableRooms, inputCheckInDate, inputCheckOutDate);
             } else {
-
+                reserveARoom(scanner, availableRooms, inputCheckInDate, inputCheckOutDate);
             }
+        }
+    }
+
+    private static void reserveARoom(Scanner scanner, Collection<IRoom> rooms, Date checkIn, Date checkOut) {
+//        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Would you like to book room? y/n");
+        String answer = scanner.nextLine();
+
+        if (answer.equalsIgnoreCase("y")) {
+
+            System.out.println("Do you have account with us? y/n");
+            String account = scanner.nextLine();
+
+            if (account.equalsIgnoreCase("y")) {
+
+                System.out.println("Please enter your email:");
+                String email = scanner.nextLine();
+
+                Customer customer = hotelResource.getCustomer(email);
+
+                if (customer == null) {
+                    System.out.println("Account not exist. Please type 3 to create an account with us before continue booking.");
+                    printMainMenu();
+                } else {
+                    System.out.println("Please enter room number");
+                    String roomNumber = scanner.nextLine();
+
+                    if (rooms.stream().anyMatch(room -> room.getRoomNumber().equals(roomNumber))) {
+                        IRoom room = hotelResource.getRoom(roomNumber);
+                        Reservation reservation = hotelResource.bookARoom(email, room, checkIn, checkOut);
+                        System.out.println("Reserve a room successfully.\n" + reservation);
+                    } else {
+                        System.out.println("Room not available.");
+                    }
+
+                }
+
+            } else if (account.equalsIgnoreCase("n")) {
+                System.out.println("Please select 3 to create account before you book a room");
+                printMainMenu();
+            } else {
+                System.out.println("You can only type y or n");
+                printMainMenu();
+            }
+
+        } else if (answer.equalsIgnoreCase("n")) {
+            printMainMenu();
+        } else {
+            System.out.println("You can only type y or n");
+            printMainMenu();
         }
     }
 
